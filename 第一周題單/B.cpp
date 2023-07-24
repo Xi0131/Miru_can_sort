@@ -17,27 +17,29 @@ const ll INF64 = 1LL<<60;
 int main()
 {
     int n, m, k;
-    vector<int> a, b;
     cin >> n >> m >> k;
-    for(int i = 0; i < n; i++){
-        int tmp;
-        cin >> tmp;
-        a.push_back(tmp);
-    }
-    for(int i = 0; i < m; i++){
-        int tmp;
-        cin >> tmp;
-        b.push_back(tmp);
-    }
+    vector<int> a(n), b(m);
+    for(int i = 0; i < n; i++) cin >> a[i];
+    for(int i = 0; i < m; i++) cin >> b[i];
+
+    sort(a.begin(), a.end());
+    sort(b.begin(), b.end());
 
     int ans = 0;
+    int min_index = 0;
     for(int i = 0; i < a.size(); i++){
-        int find_appart = a[i];
-        int max_size = find_appart + k, min_size = find_appart - k;
-        for(int j = 0; j < b.size(); j++){
-            if(b[j] <= max_size && b[j] >= min_size){
-                b.erase(b.begin() + j);
+        int max = a[i] + k, min = a[i] - k;
+        for(int j = min_index; j < b.size(); j++){
+            if(b[j] >= min && b[j] <= max){
+                min_index++;
                 ans++;
+                break;
+            }
+            else if(b[j] > max){
+                break;
+            }
+            else{
+                min_index++;
             }
         }
     }
