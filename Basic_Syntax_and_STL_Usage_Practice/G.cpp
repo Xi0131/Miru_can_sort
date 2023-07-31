@@ -13,21 +13,44 @@ const int MOD = 1e9 + 7;
 const int INF32 = 1<<30;
 const ll INF64 = 1LL<<60;
 
+vector<int> x, y, s, v;
+
+int find(int a){
+    if(a == s[a]) return a;
+    else return s[a] = find(s[a]);
+}
+
+bool join(int a, int b){
+    int fa = find(a);
+    int fb = find(b);
+    if(fa == fb) return true;
+    else{
+        s[fa] = fb;
+        return false;
+    }
+}
 
 int main()
 {
     int n, m;
     cin >> n >> m;
-    map<int, int> mp;
-    bool flag = 0;
+    v.resize(n+1);
+    bool flag = false;
     for(int i = 0; i < m; i++){
         int a, b;
         cin >> a >> b;
-        mp[a]++;
-        mp[b]++;
-        if(mp[a] > 2 || mp[b] > 2){
-            flag = 1;
-            break;
+        v[a]++;
+        v[b]++;
+        x.push_back(a);
+        y.push_back(b);
+    }
+
+    s.resize(n);
+    for(int i = 0; i < n+1; i++) if(v[i] > 2) flag = true;
+    for(int i = 0; i < n+1; i++) s[i] = i;
+    for(int i = 0; i < m; i++){
+        if(join(x[i], y[i])){
+            flag = true;
         }
     }
 

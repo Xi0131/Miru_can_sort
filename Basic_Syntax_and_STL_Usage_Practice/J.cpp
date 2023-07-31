@@ -16,26 +16,26 @@ const ll INF64 = 1LL<<60;
 
 int main()
 {
-    int n;
-    cin >> n;
-    vector<pii> vec;
-    for(int i = 0; i < n; i++){
-        int a, b;
-        cin >> a >> b;
-        vec.push_back({a, 1});
-        vec.push_back({b, -1});
+    int Q;
+    cin >> Q;
+    map<int, int> m;
+    for(int i = 0; i < Q; i++){
+        int n, tmp;
+        cin >> n;
+        if(n == 1){
+            cin >> tmp;
+            m[tmp]++;
+        }
+        else if(n == 2){
+            int cnt;
+            cin >> tmp >> cnt;
+            m[tmp] -= min(m[tmp], cnt);
+            if(m[tmp] == 0) m.erase(tmp);
+        }
+        else{
+            cout << m.rbegin()->first - m.begin()->first << endl;
+        }
     }
-
-    sort(vec.begin(), vec.end());
-
-    int ans = 0;
-    int cnt = 0;
-    for(auto i : vec){
-        cnt += i.second;
-        ans = max(ans, cnt);
-    }
-    
-    cout << ans;
 
 	return 0;
 }
