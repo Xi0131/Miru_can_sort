@@ -13,9 +13,30 @@ const int MOD = 1e9 + 7;
 const int INF32 = 1<<30;
 const ll INF64 = 1LL<<60;
 
+vector<vector<int>> adj;
+vector<int> in, ans;
+
 int main()
 {
-	debug;
+	int n, m;
+	cin >> n >> m;
+	in.resize(n+1);
+	adj.resize(n+1);
+	for(int i = 0; i < m; i++){
+		int a, b;
+		cin >> a >> b;
+		adj[b].push_back(a);
+		in[b]++;
+	}
+
+	queue<int> q;
+	while(!q.empty()){
+		int tmp = q.front();
+		q.pop();
+		for(int i : adj[tmp]){
+			in[i]--;
+		}
+	}
 
 	return 0;
 }
