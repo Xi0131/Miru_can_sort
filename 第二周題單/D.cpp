@@ -14,31 +14,32 @@ const int INF32 = 1<<30;
 const ll INF64 = 1LL<<60;
 
 vector<vector<int>> adj;
-vector<int> in, yen;
+vector<int> yen;
 
 int main()
 {
 	int n, m;
 	cin >> n >> m;
-	in.resize(n+1);
 	adj.resize(n+1);
     yen.resize(n+1);
+	vector<int> max_yen(n+1, -1e9);
     for(int i = 1; i <= n; i++) cin >> yen[i];
 	for(int i = 0; i < m; i++){
 		int a, b;
 		cin >> a >> b;
-		adj[b].push_back(a);
-		in[b]++;
+		adj[a].push_back(b);
 	}
 
-	queue<int> q;
-	while(!q.empty()){
-		int tmp = q.front();
-		q.pop();
-		for(int i : adj[tmp]){
-			in[i]--;
+	int ans = -1e9;
+	for(int i = n; i >= 1; i--){
+		for(int j : adj[i]){
+			max_yen[i] = max(max_yen[i], max_yen[j]);
 		}
+		ans = max(ans, max_yen[i] - yen[i]);
+		max_yen[i] = max(max_yen[i], yen[i]);
 	}
+
+	cout << ans;
 
 	return 0;
 }

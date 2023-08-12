@@ -12,9 +12,11 @@ typedef pair<int, int> pii;
 const int MOD = 1e9 + 7;
 const int INF32 = 1<<30;
 const ll INF64 = 1LL<<60;
+const int maxn = 5e4 + 5;
 
 vector<vector<int>> adj;
 vector<int> in, ans;
+bitset<maxn> bit[maxn];
 
 int main()
 {
@@ -26,16 +28,27 @@ int main()
 		int a, b;
 		cin >> a >> b;
 		adj[b].push_back(a);
-		in[b]++;
+		in[a]++;
 	}
 
 	queue<int> q;
+	for(int i = 1; i <= n; i++) bit[i][i] = true;
+	for(int i = 1; i <= n; i++){
+		if(in[i] == 0) q.push(i);
+	}
+
 	while(!q.empty()){
 		int tmp = q.front();
 		q.pop();
 		for(int i : adj[tmp]){
+			bit[i] |= bit[tmp];
 			in[i]--;
+			if(in[i] == 0) q.push(i);
 		}
+	}
+
+	for(int i = 1; i <= n; i++){
+		cout << bit[i].count() << ' ';
 	}
 
 	return 0;
