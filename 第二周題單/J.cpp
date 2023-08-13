@@ -13,19 +13,49 @@ const int MOD = 1e9 + 7;
 const int INF32 = 1<<30;
 const ll INF64 = 1LL<<60;
 
-int n, m, longest;
+int n, m;
 ll ans = LONG_LONG_MAX;
-vector<vector<int>> adj_m(1e5+1, vector<int>(1e5+1, 1e9));
-vector<vector<int>> adj_l;
+vector<vector<pii>> adj_l;
 priority_queue<pii, vector<pii>, greater<pii>> q;
-vector<int> visited, d, path;
+vector<int> visited, path, longest;
+vector<ll> d(1e5, LONG_LONG_MAX);
 
 void dijkstra(int x){
-	visited[x] = true;
-	for(int i : adj_l[x]){
-		if(!visited[i]){
-			path[i] = x;
-			q.push({adj_m[x][i], i});
+	visited[x] = 1;
+	// watch(x);
+	for(pii i : adj_l[x]){
+		int id = i.first;
+		int weight = i.second;
+		// watch(id);
+		if(weight > longest[x]){
+				int tmp_longest = weight;
+				ll tmp_d = d[x] + (weight / 2) - (longest[x] / 2) + longest[x];
+				if(tmp_d < d[id]){
+					
+				}
+			}
+			else d[id] = d[x] + weight;
+		if(visited[id] == 1){
+
+			if(weight > longest[x]){
+
+			}
+			if(d[id] > d[x] + adj_l[x][id].second){
+				d[id] = d[x] + adj_l[x][id].second;
+			}
+		}
+		if(!visited[id]){
+			path[id] = x;
+			if(weight > longest[x])
+			longest[id] = max(longest[x], weight);
+			if(weight > longest[x]){
+				longest[id] = weight;
+				d[id] = d[x] + (weight / 2) - (longest[x] / 2) + longest[x];
+			}
+			else d[id] = d[x] + weight;
+			watch(id);
+			watch(d[id]);
+			q.push({d[id], id});
 		}
 	}
 	if(!q.empty()){
@@ -41,17 +71,27 @@ int main()
 	d.resize(n+1);
 	path.resize(n+1);
 	adj_l.resize(n+1);
+	longest.resize(n+1);
 	visited.resize(n+1);
 	for(int i = 0, a, b, c; i < m; i++){
 		cin >> a >> b >> c;
-		adj_l[a].push_back(b);
-		adj_m[a][b] = c;
+		adj_l[a].push_back({b, c});
 	}
 
 	path[1] = 1;
+	d[1] = 0;
 	dijkstra(1);
 
-	for(int i : path) watch(i);
+	// for(int i : path) watch(i);
+	// for(int j : d) watch(j);
+	// int i = n;
+	// while(i != 1){
+	// 	longest = max(longest, (int)(d[i] - d[path[i]]));
+	// 	i = path[i];
+	// }
+	// watch(longest);
+	// cout << d[n] - longest + (longest / 2);
+	cout << d[n];
 
 	return 0;
 }
