@@ -12,86 +12,46 @@ typedef pair<int, int> pii;
 const int MOD = 1e9 + 7;
 const int INF32 = 1<<30;
 const ll INF64 = 1LL<<60;
+const int maxn = 100005;
 
-int n, m;
-ll ans = LONG_LONG_MAX;
-vector<vector<pii>> adj_l;
-priority_queue<pii, vector<pii>, greater<pii>> q;
-vector<int> visited, path, longest;
-vector<ll> d(1e5, LONG_LONG_MAX);
-
-void dijkstra(int x){
-	visited[x] = 1;
-	// watch(x);
-	for(pii i : adj_l[x]){
-		int id = i.first;
-		int weight = i.second;
-		// watch(id);
-		if(weight > longest[x]){
-				int tmp_longest = weight;
-				ll tmp_d = d[x] + (weight / 2) - (longest[x] / 2) + longest[x];
-				if(tmp_d < d[id]){
-					
-				}
-			}
-			else d[id] = d[x] + weight;
-		if(visited[id] == 1){
-
-			if(weight > longest[x]){
-
-			}
-			if(d[id] > d[x] + adj_l[x][id].second){
-				d[id] = d[x] + adj_l[x][id].second;
-			}
-		}
-		if(!visited[id]){
-			path[id] = x;
-			if(weight > longest[x])
-			longest[id] = max(longest[x], weight);
-			if(weight > longest[x]){
-				longest[id] = weight;
-				d[id] = d[x] + (weight / 2) - (longest[x] / 2) + longest[x];
-			}
-			else d[id] = d[x] + weight;
-			watch(id);
-			watch(d[id]);
-			q.push({d[id], id});
-		}
-	}
-	if(!q.empty()){
-		int tmp = q.top().second;
-		q.pop();
-		dijkstra(tmp);
-	}
-}
+int n, m, a, b;
+ll c;
+ll dis[2][maxn];
+vector<vector<pair<ll, int>>> adj;
 
 int main()
 {
 	cin >> n >> m;
-	d.resize(n+1);
-	path.resize(n+1);
-	adj_l.resize(n+1);
-	longest.resize(n+1);
-	visited.resize(n+1);
-	for(int i = 0, a, b, c; i < m; i++){
+	adj.resize(n+1);
+	for(int i = 0; i < m; i++){
 		cin >> a >> b >> c;
-		adj_l[a].push_back({b, c});
+		adj[a].push_back({c, b});
 	}
-
-	path[1] = 1;
-	d[1] = 0;
-	dijkstra(1);
-
-	// for(int i : path) watch(i);
-	// for(int j : d) watch(j);
-	// int i = n;
-	// while(i != 1){
-	// 	longest = max(longest, (int)(d[i] - d[path[i]]));
-	// 	i = path[i];
-	// }
-	// watch(longest);
-	// cout << d[n] - longest + (longest / 2);
-	cout << d[n];
+	for(int i = 1; i <= n; i++){
+		dis[0][i] = 1e18;
+		dis[1][i] = 1e18;
+	}
+	dis[0][1] = 0;
+	priority_queue<pair<ll, pair<int, int>>, vector<pair<ll, pair<int, int>>>, greater<pair<ll, pair<int, int>>>> pq;
+	pq.push({0, {1, 0}});
+	while(!pq.empty()){
+		auto tmp = pq.top();
+		pq.pop();
+		if(tmp.first > dis[tmp.second.second][tmp.second.first]) continue;
+		for(auto i : adj[tmp.second.first]){
+			if(dis[tmp.second.second][i.second] > tmp.first + i.first){
+				dis[tmp.second.second][i.second] = tmp.first + i.first;
+				pq.push({dis[tmp.second.second][i.second], {i.second, tmp.second.second}});
+			}
+			if(tmp.second.second == 0){
+				if(dis[1][i.second] > tmp.first + i.first / 2){
+					dis[1][i.second] = tmp.first + i.first / 2;
+					pq.push({dis[1][i.second], {i.second, 1}});
+				}
+			}
+		}
+	}
+	cout << dis[1][n];
 
 	return 0;
 }
