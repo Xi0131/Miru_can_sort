@@ -1,4 +1,4 @@
-w#include <bits/stdc++.h>
+#include <bits/stdc++.h>
 #pragma GCC optimize("unroll-loops,no-stack-protector")
 #pragma GCC target("sse,sse2,ssse3,sse4,popcnt,abm,mmx,avx,tune=native")
 #define watch(x) cout << (#x) << " is " << (x) << endl
@@ -14,11 +14,13 @@ const int INF32 = 1<<30;
 const ll INF64 = 1LL<<60;
 const int maxn = 200005;
 
+int n, l, r, x;
 
-
+// 類hamilton
 int main()
 {
-	debug;
+    cin >> n >> l >> r >> x;
+
 
 	return 0;
 }
