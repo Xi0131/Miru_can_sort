@@ -12,13 +12,18 @@ typedef pair<int, int> pii;
 const int MOD = 1e9 + 7;
 const int INF32 = 1<<30;
 const ll INF64 = 1LL<<60;
-const int maxn = 200005;
-
 
 
 int main()
 {
-	debug;
+    int n, w;
+    cin >> n >> w;
+    int item[n], weight[n];
+    for(int i = 0; i < n; i++){
+        cin >> item[i] >> weight[i];
+    }
+
+    
 
 	return 0;
 }

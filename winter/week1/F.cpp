@@ -12,13 +12,25 @@ typedef pair<int, int> pii;
 const int MOD = 1e9 + 7;
 const int INF32 = 1<<30;
 const ll INF64 = 1LL<<60;
-const int maxn = 200005;
-
 
 
 int main()
 {
-	debug;
+    int t;
+    cin >> t;
+    for(int i = 0; i < t; i++){
+        int n;
+        cin >> n;
+        string s;
+        cin >> s;
+        int pos = 0, neg = 0;
+        for(int j = 0; j < s.size(); j++){
+            if(s[j] == '+') pos++;
+            else neg++;
+        }
+        int ans = pos > neg ? (pos - neg) : (neg - pos);
+        cout << ans << '\n';
+    }
 
 	return 0;
 }

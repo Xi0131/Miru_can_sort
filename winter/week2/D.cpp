@@ -12,13 +12,23 @@ typedef pair<int, int> pii;
 const int MOD = 1e9 + 7;
 const int INF32 = 1<<30;
 const ll INF64 = 1LL<<60;
-const int maxn = 200005;
-
 
 
 int main()
 {
-	debug;
+    int n;
+    cin >> n;
+    int arr[n];
+    for(int i = 0; i < n; i++) cin >> arr[i];
+    sort(arr, arr+n);
+
+    int l = 0, r = 0, ans = 0;
+    while(r < n){
+        while(r < n && arr[r] - arr[l] <= 5) r++;
+        ans = max(ans, r-l);
+        l++;
+    }
+    cout << ans;
 
 	return 0;
 }

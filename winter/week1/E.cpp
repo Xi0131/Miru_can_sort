@@ -12,13 +12,13 @@ typedef pair<int, int> pii;
 const int MOD = 1e9 + 7;
 const int INF32 = 1<<30;
 const ll INF64 = 1LL<<60;
-const int maxn = 200005;
-
 
 
 int main()
 {
-	debug;
+    int t;
+    cin >> t;
+    
 
 	return 0;
 }

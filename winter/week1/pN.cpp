@@ -5,20 +5,26 @@
 #define debug cout << "hi" << endl
 
 using namespace std;
-typedef long long ll;
+typedef unsigned long long ll;
 typedef long double ld;
 typedef pair<int, int> pii;
 
 const int MOD = 1e9 + 7;
 const int INF32 = 1<<30;
 const ll INF64 = 1LL<<60;
-const int maxn = 200005;
-
 
 
 int main()
 {
-	debug;
+    int n;
+    ll acc = 0;
+    cin >> n;
+    for(ll i = 0, tmp; i < n; i++){
+        cin >> tmp;
+        if(tmp != 0) acc += tmp * tmp + 1;
+    }
+    if(acc == 0) cout << 1;
+    else cout << acc;
 
 	return 0;
 }
