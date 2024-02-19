@@ -16,42 +16,51 @@ const ll INF64 = 1LL<<60;
 
 int main()
 {
-    string s, t, ans = "\0", tmp = "\0";
-    cin >> s >> t;
-    vector<int> vec[2];
-    for(int i = 0; i <= s.size(); i++){
-        vec[0].push_back(0);
-        vec[1].push_back(0);
+    int n, m;
+    string str1, str2, ans, tmp;
+    cin >> str1 >> str2;
+    if(str1.size() < str2.size()){
+        tmp = str1;
+        str1 = str2;
+        str2 = tmp;
     }
-    watch(vec[0][0]);
+    n = str1.size(), m = str2.size();
 
-    for(int i = 1; i <= t.size(); i++){
-        cout << '\n';
-        for(int j = 1; j <= s.size(); j++){
-            if(s[j-1] == t[i-1]){
-                vec[1][j] = vec[0][j-1] + 1;
+    vector<vector<int>> dp(n+1, vector<int>(m+1, 0));
+
+    for(int i = 0; i <= n; i++){
+        for(int j = 0; j <= m; j++){
+            dp[i][j] = 0;
+        }
+    }
+
+    for(int i = 1; i <= n; i++){
+        for(int j = 1; j <= m; j++){
+            if(str1[i-1] == str2[j-1]){
+                dp[i][j] = dp[i-1][j-1] + 1;
             }
             else{
-                vec[1][j] = max(vec[0][j], vec[1][j-1]);
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
             }
         }
-        for(int j = 1; j <= s.size(); j++){
-            if(vec[1][j] > vec[1][j-1]){
-                tmp.push_back(s[j-1]);
-            }
-        }
-        for(int j = 0; j <= s.size(); j++){
-            cout << vec[1][j];
-        } cout << '\n';
-        swap(vec[0], vec[1]);
-        watch(tmp);
-        ans = tmp;
-        tmp = "\0";
     }
-    watch(vec[1][s.size()]);
-    cout << ans << '\n';
-    // for(int i = 0; i <= 1; i++){
-    // }
+    
+
+    int i = n, j = m;
+    while(i > 0 && j > 0){
+        if(str1[i-1] == str2[j-1]){
+            ans.push_back(str2[j-1]);
+            i--;
+            j--;
+        }
+        else if(dp[i-1][j] >= dp[i][j-1]){
+            i--;
+        }
+        else j--;
+    }
+    for(int i = ans.size() - 1; i >= 0; i--){
+        cout << ans[i];
+    }
 
 	return 0;
 }

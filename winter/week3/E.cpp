@@ -16,8 +16,24 @@ const ll INF64 = 1LL<<60;
 
 int main()
 {
-    double d = 26 / 33;
-    cout << d % MOD;
+    int n, x;
+    cin >> n >> x;
+    int arr[n];
+    for(int i = 0; i < n; i++) cin >> arr[i];
+
+    vector<int> vec;
+    for(int i = 0; i < n; i++){
+        auto it = lower_bound(vec.begin(), vec.end(), arr[i]);
+
+        if(it == vec.end()){
+            vec.push_back(arr[i]);
+        }
+        else{
+            *it = arr[i];
+        }
+    }
+
+    cout << vec.size();
 
 	return 0;
 }

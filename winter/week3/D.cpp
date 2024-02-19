@@ -18,29 +18,34 @@ int main()
 {
     int n, w;
     cin >> n >> w;
-    int item[n], weight[n];
+    ll item[n], weight[n];
     for(int i = 0; i < n; i++){
         cin >> weight[i] >> item[i];
     }
 
     vector<ll> dp[2];
-    for(int i = 0; i <= w; i++){
-        dp[0].push_back(0);
-        dp[1].push_back(0);
+    for(int i = 0; i < 100001; i++){
+        dp[0].push_back(INF64);
+        dp[1].push_back(INF64);
     }
-
+    
     for(int i = 0; i < n; i++){
-        for(int j = 0; j <= w; j++){
-            if(j < weight[i]){
-                dp[1][j] = dp[0][j];
-            }
-            else{
-                dp[1][j] = max(dp[0][j], dp[0][j-weight[i]] + item[i]);
+        for(int j = 0; j < dp[0].size(); j++){
+            if(dp[0][j] != INF64){
+                dp[1][j] = min(dp[1][j], dp[0][j]);
+                dp[1][j + item[i]] = min(dp[0][j + item[i]], dp[0][j] + weight[i]);
             }
         }
+        dp[1][item[i]] = min(weight[i], dp[1][item[i]]);
         swap(dp[0], dp[1]);
     }
-    cout << dp[0][w];
+
+    for(int i = dp[0].size() - 1; i >= 0; i--){
+        if(dp[0][i] <= w){
+            cout << i;
+            return 0;
+        }
+    }
 
 	return 0;
 }

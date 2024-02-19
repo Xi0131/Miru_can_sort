@@ -13,11 +13,25 @@ const int MOD = 1e9 + 7;
 const int INF32 = 1<<30;
 const ll INF64 = 1LL<<60;
 
+ll dp[1000001];
 
 int main()
 {
-    double d = 26 / 33;
-    cout << d % MOD;
+    int n, x;
+    cin >> n >> x;
+    int arr[n];
+    for(int i = 0; i < n; i++) cin >> arr[i];
+
+    dp[0] = 1;
+    for(int i = 0; i < n; i++){
+        for(int j = 1; j <= x; j++){
+            if(j - arr[i] >= 0){
+                dp[j] = dp[j] + dp[j - arr[i]];
+                dp[j] %= MOD;
+            }
+        }
+    }
+    cout << dp[x];
 
 	return 0;
 }
