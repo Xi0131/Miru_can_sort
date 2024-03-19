@@ -18,15 +18,29 @@ int main()
 {
     int t;
     cin >> t;
-    for(int i = 0; i < t; i++){
-        vector<ll> v1, v2;
-        int n, tmp;
+    while(t--){
+        int n, flag = 1;
+        ll sum = 0;
+        set<ll> st;
         cin >> n;
-        if(n == 1){
-            cout << "NO\n";
-            continue;
+        int arr[n];
+        for(int i = 0; i < n; i++) cin >> arr[i];
+        st.insert(0);
+        for(int i = 0; i < n; i++){
+            if(i % 2){
+                sum -= arr[i];
+            }
+            else{
+                sum += arr[i];
+            }
+            if(st.find(sum) != st.end()){
+                cout << "YES\n";
+                flag = 0;
+                break;
+            }
+            st.insert(sum);
         }
-        
+        if(flag) cout << "NO\n";
     }
 
 	return 0;

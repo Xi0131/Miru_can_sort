@@ -1,23 +1,43 @@
-#include <bits/stdc++.h>
-#pragma GCC optimize("unroll-loops,no-stack-protector")
-#pragma GCC target("sse,sse2,ssse3,sse4,popcnt,abm,mmx,avx,tune=native")
-#define watch(x) cout << (#x) << " is " << (x) << endl
-#define debug cout << "hi" << endl
+#include <stdio.h>
+#include <pthread.h>
 
-using namespace std;
-typedef long long ll;
-typedef long double ld;
-typedef pair<int, int> pii;
+#define N 10 // Change this value to the desired Fibonacci sequence length
 
-const int MOD = 1e9 + 7;
-const int INF32 = 1<<30;
-const ll INF64 = 1LL<<60;
+// Structure to hold arguments for the thread function
+struct ThreadArgs {
+    int n;
+    long long result;
+};
 
+// Function to calculate Fibonacci number
+long long fibonacci(int n) {
+    if (n <= 1) {
+        return n;
+    } else {
+        return fibonacci(n - 1) + fibonacci(n - 2);
+    }
+}
 
-int main()
-{
-    double d = 26 / 33;
-    cout << d % MOD;
+// Thread function to calculate Fibonacci number and store the result in the ThreadArgs structure
+void *fibonacciThread(void *args) {
+    struct ThreadArgs *threadArgs = (struct ThreadArgs *)args;
+    threadArgs->result = fibonacci(threadArgs->n);
+    pthread_exit(NULL);
+}
 
-	return 0;
+int main() {
+    pthread_t thread;
+    struct ThreadArgs threadArgs;
+
+    // Create a thread to calculate Fibonacci number
+    threadArgs.n = N;
+    pthread_create(&thread, NULL, fibonacciThread, (void *)&threadArgs);
+
+    // Wait for the thread to finish
+    pthread_join(thread, NULL);
+
+    // Print the result
+    printf("Fibonacci(%d) = %lld\n", N, threadArgs.result);
+
+    return 0;
 }

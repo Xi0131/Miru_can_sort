@@ -18,18 +18,21 @@ int main()
 {
     int t;
     cin >> t;
-    for(int i = 0; i < t; i++){
-        int n;
+    while(t--){
+        int n, cnt = 0;
         cin >> n;
-        string s;
-        cin >> s;
-        int pos = 0, neg = 0;
-        for(int j = 0; j < s.size(); j++){
-            if(s[j] == '+') pos++;
-            else neg++;
+        int x = INF32, y = INF32;
+        for(int i = 0, tmp; i < n; i++){
+            cin >> tmp;
+            if(x > y) swap(x, y);
+            if(tmp <= x) x = tmp;
+            else if(tmp <= y) y = tmp;
+            else{
+                x = tmp;
+                cnt++;
+            }
         }
-        int ans = pos > neg ? (pos - neg) : (neg - pos);
-        cout << ans << '\n';
+        cout << cnt << '\n';
     }
 
 	return 0;
