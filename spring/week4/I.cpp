@@ -5,7 +5,7 @@
 #define debug cout << "hi" << endl
 
 using namespace std;
-typedef long long ll;
+typedef unsigned long long ll;
 typedef long double ld;
 typedef pair<int, int> pii;
 
@@ -24,8 +24,6 @@ bool merge(int a, int b){
     int px = find(a);
     int py = find(b);
     if(px == py) return false;
-    // watch(a);
-    // watch(b);
     if(sz[px] < sz[py]){
         swap(px, py);
     }
@@ -34,16 +32,16 @@ bool merge(int a, int b){
     return true;
 }
 
+ll mpow(ll x, ll y, int m ){
+    if(y == 1) return x % m;
+    else if(!(y % 2)) return (mpow(x, y/2, m) * mpow(x, y/2, m)) % m;
+    else return (mpow(x, y - 1, m) * x) % m;
+}
+
 int main()
 {
-    ifstream cin("superbull.in");
-    ofstream cout("superbull.out");
-    int n;
-    cin >> n;
-    if(n == 1){
-        cout << 0;
-        return 0;
-    }
+    int n, m;
+    cin >> n >> m;
     int arr[n];
     for(int i = 0; i < n; i++){
         cin >> arr[i];
@@ -53,11 +51,12 @@ int main()
         parent[i] = i;
     }
 
-    priority_queue<pair<int, pair<int, int>>> pq;
+    priority_queue<pair<ll, pair<int, int>>> pq;
     for(int i = 0; i < n; i++){
         for(int j = i; j < n; j++){
             if(i == j) continue;
-            pq.push(make_pair(arr[i] ^ arr[j], make_pair(i, j)));
+            ll tmp = (mpow(arr[i], arr[j], m) + mpow(arr[j], arr[i], m)) % m;
+            pq.push(make_pair(tmp, make_pair(i, j)));
         }
     }
 
@@ -71,7 +70,7 @@ int main()
         }
         pq.pop();
     }
-    // debug;
+
     cout << ans;
 
 	return 0;
