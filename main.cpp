@@ -18,6 +18,8 @@ const int maxn = 200005;
 
 int main()
 {
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
 	debug;
 
 	return 0;
