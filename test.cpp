@@ -20,8 +20,10 @@ int main()
 {
 	ios_base::sync_with_stdio(0);
 	cin.tie(0);
-	vector<int> vec;
-	watch(vec.max_size());
+	priority_queue<int, vector<int>, greater<int>> pq;
+	pq.push(1);
+	pq.push(3);
+	watch(pq.top());
 
 	return 0;
 }

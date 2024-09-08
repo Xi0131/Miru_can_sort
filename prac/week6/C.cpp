@@ -15,29 +15,13 @@ const ll INF64 = 1LL<<60;
 const int maxn = 200005;
 
 int n, q;
-vector<int> arr(maxn);
-vector<ll> bit(maxn * 4);
-vector<int> ranked(maxn);
+vector<ll> bit(maxn), prefix(maxn);
 
-struct ele{
-    char c;
-    int a, b;
-};
-
-int lowbit(int x){
-    return x & -x;
+ll lowbit(int i){
+    return i & (-i);
 }
 
-void update(int i, int x){
-    int pos = upper_bound(ranked.begin(), ranked.end(), i) - ranked.begin();
-    while(pos <= maxn * 4){
-        bit[pos] += x;
-        pos += lowbit(pos);
-    }
-}
-
-ll query(int x){
-    int pos = upper_bound(ranked.begin(), ranked.end(), x) - ranked.begin();
+ll sum(int i){
     ll ret = 0;
     while(pos){
         ret += bit[pos];
@@ -60,15 +44,11 @@ int main()
 	ios_base::sync_with_stdio(0);
 	cin.tie(0);
     cin >> n >> q;
-    arr.resize(n);
-    for(int i = 0; i < n; i++) cin >> arr[i];
-    
-    ranked = arr;
-
-    vector<ele> ques;
-    char c;
-    int a, b;
-    for(int i = 0; i < q; i++){
+    for(int i = 1; i <= n; i++){
+        cin >> prefix[i];
+    }
+    buildBIT(bit, prefix, n);
+    for(int i = 0, c, a, b; i < q; i++){
         cin >> c >> a >> b;
         ques.push_back({c, a, b});
         if(c == '!'){
@@ -91,7 +71,8 @@ int main()
             update(arr[ques[i].a], 1);
         }
         else{
-            cout << query(ques[i].b) - query(ques[i].a) << '\n';
+            add(a, b - prefix[a]);
+            prefix[a] = b;
         }
     }
 
