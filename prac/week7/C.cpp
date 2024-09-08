@@ -15,12 +15,28 @@ const ll INF64 = 1LL<<60;
 const int maxn = 200005;
 const int MAXN = 2e6 + 5;
 
+ll expo(ll a, ll b){
+    if(b == 0) return 1;
+    if(!(b % 2)){
+        ll tmp = expo(a, b / 2);
+        return (tmp * tmp) % MOD;
+    }
+    else{
+        return (expo(a, b - 1) * a) % MOD;
+    }
+}
 
 int main()
 {
 	ios_base::sync_with_stdio(0);
 	cin.tie(0);
-	debug;
+    int n;
+    cin >> n;
+    while(n--){
+        ll a, b;
+        cin >> a >> b;
+        cout << expo(a, b) << '\n';
+    }
 
 	return 0;
 }

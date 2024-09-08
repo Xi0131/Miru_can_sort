@@ -13,14 +13,15 @@ const int MOD = 1e9 + 7;
 const int INF32 = 1<<30;
 const ll INF64 = 1LL<<60;
 const int maxn = 200005;
-const int MAXN = 2e6 + 5;
+
 
 
 int main()
 {
 	ios_base::sync_with_stdio(0);
 	cin.tie(0);
-	debug;
+	vector<int> vec;
+	watch(vec.max_size());
 
 	return 0;
 }

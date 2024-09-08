@@ -15,12 +15,23 @@ const ll INF64 = 1LL<<60;
 const int maxn = 200005;
 const int MAXN = 2e6 + 5;
 
-
 int main()
 {
 	ios_base::sync_with_stdio(0);
 	cin.tie(0);
-	debug;
+    
+    int t;
+    cin >> t;
+    while(t--){
+        int n, k, d;
+        cin >> n >> k >> d;
+        int a[n], b[k];
+        for(int i = 0; i < n; i++) cin >> a[i];
+        for(int i = 0; i < k; i++) cin >> b[i];
+
+
+        
+    }
 
 	return 0;
 }

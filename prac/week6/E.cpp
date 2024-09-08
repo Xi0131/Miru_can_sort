@@ -15,13 +15,13 @@ const ll INF64 = 1LL<<60;
 const int maxn = 200005;
 
 int n, q;
-vector<int> arr;
+vector<int> prefix;
 vector<ll> vec;
 
 void build(int l, int r, int idx){
 	// watch(idx);
 	if(l == r){
-		vec[idx] = arr[l];
+		vec[idx] = prefix[l];
 		return;
 	}
 	int mid = (l + r) >> 1;
@@ -59,10 +59,10 @@ void update(int l, int r, int idx, int pos, int val){
 int main()
 {
     cin >> n >> q;
-	arr.resize(n + 1);
+	prefix.resize(n + 1);
 	vec.resize(n * 4);
 	for(int i = 1; i <= n; i++){
-		cin >> arr[i];
+		cin >> prefix[i];
 	}
 
 	build(1, n, 1);

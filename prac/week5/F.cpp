@@ -15,7 +15,7 @@ const ll INF64 = 1LL<<60;
 
 int n;
 vector<int> vec, in, ans;
-vector<vector<int>> g;
+vector<vector<int>> val;
 
 int main()
 {

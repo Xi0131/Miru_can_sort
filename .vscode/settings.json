@@ -7,6 +7,8 @@
         "random": "cpp",
         "limits": "cpp",
         "valarray": "cpp",
-        "cstdlib": "cpp"
+        "cstdlib": "cpp",
+        "ostream": "cpp",
+        "algorithm": "cpp"
     }
 }
