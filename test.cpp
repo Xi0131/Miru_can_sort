@@ -18,9 +18,7 @@ const int maxn = 200005;
 
 int main()
 {
-	int a = 10;
-	a += (4 / 2) + a++;
-	cout << a << '\n';
+	cout << (int)'A';
 
 	return 0;
 }
